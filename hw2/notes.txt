@@ -1,0 +1,13 @@
+please create a simple microservice system that has the following:
+- frontend service: a web app, the port should be on 8000, it should have a button that will call the kafka sender to send a message to kafka, and a table that displays messages from the kafka receiver
+- backend service: kafka sender, port 5000, an api server with one endpoint /message (POST), is sends messages to kafka
+- backend service: kafka receiver, port 6000, api server with one endpoint /message (GET), it displays all messages from mongodb, listens to kafka and when message is received it saves message to mongodb
+- mongodb
+- kafka
+
+​ensure that everything above is containerized and deployable on docker, and then create a docker compose file to deploy the system
+
+yaml
+kafka
+kubernetes
+infrastructure as code

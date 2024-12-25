@@ -1,0 +1,75 @@
+version: '3'
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    hostname: zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - app-network
+
+  kafka:
+    image: wurstmeister/kafka
+    hostname: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "messages:1:1"
+    depends_on:
+      - zookeeper
+    networks:
+      - app-network
+
+  mongodb:
+    image: mongo:latest
+    hostname: mongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+
+  kafka-sender:
+    build:
+      context: .
+      dockerfile: Dockerfile.sender
+    hostname: kafka-sender
+    ports:
+      - "5000:5000"
+    depends_on:
+      - kafka
+      - mongodb
+    networks:
+      - app-network
+
+  kafka-receiver:
+    build:
+      context: .
+      dockerfile: Dockerfile.receiver
+    hostname: kafka-receiver
+    ports:
+      - "6000:6000"
+    depends_on:
+      - kafka
+      - mongodb
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    hostname: frontend
+    ports:
+      - "8000:80"
+    depends_on:
+      - kafka-sender
+      - kafka-receiver
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

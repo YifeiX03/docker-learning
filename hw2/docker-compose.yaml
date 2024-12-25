@@ -1,0 +1,52 @@
+version: '3'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "8000:8000"
+    environment:
+      - REACT_APP_KAFKA_SENDER_URL=http://kafka-sender:5000
+      - REACT_APP_KAFKA_RECEIVER_URL=http://kafka-receiver:5500
+    depends_on:
+      - kafka-sender
+      - kafka-receiver
+
+  kafka-sender:
+    build: ./kafka-sender
+    ports:
+      - "5000:5000"
+    depends_on:
+      - kafka
+
+  kafka-receiver:
+    build: ./kafka-receiver
+    ports:
+      - "5500:5500"
+    depends_on:
+      - kafka
+      - mongodb
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    depends_on:
+      - zookeeper
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:

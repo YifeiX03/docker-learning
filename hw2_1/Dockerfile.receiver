@@ -1,0 +1,8 @@
+FROM python:3.9
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY kafka_receiver.py .
+COPY wait-for-kafka.sh .
+RUN apt-get update && apt-get install -y netcat-openbsd
+CMD ["./wait-for-kafka.sh", "kafka", "python", "kafka_receiver.py"]
