@@ -1,0 +1,8 @@
+namespace: dev
+
+kafkaReceiver:
+  replicaCount: 2
+
+kafkaSender:
+  replicaCount: 2
+

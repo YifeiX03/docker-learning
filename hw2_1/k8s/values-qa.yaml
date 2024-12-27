@@ -1,0 +1,7 @@
+namespace: qa
+
+kafkaReceiver:
+  replicaCount: 2
+
+kafkaSender:
+  replicaCount: 2

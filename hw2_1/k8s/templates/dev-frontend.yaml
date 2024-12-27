@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-frontend
+  namespace: {{ .Values.namespace | default "default" }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: {{ .Values.frontend.image }}
+        imagePullPolicy: Never
+        ports:
+        - containerPort: {{ .Values.frontend.port }}
+        env:
+        - name: KAFKA_SENDER_HOST
+          value: {{ .Release.Name }}-kafka-sender
+        - name: KAFKA_RECEIVER_HOST
+          value: {{ .Release.Name }}-kafka-receiver

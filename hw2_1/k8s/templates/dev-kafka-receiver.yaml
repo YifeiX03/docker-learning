@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-kafka-receiver
+  namespace: {{ .Values.namespace | default "default" }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-receiver
+  template:
+    metadata:
+      labels:
+        app: kafka-receiver
+    spec:
+      containers:
+      - name: kafka-receiver
+        image: {{ .Values.kafkaReceiver.image }}
+        imagePullPolicy: Never
+        ports:
+        - containerPort: {{ .Values.kafkaReceiver.port }}

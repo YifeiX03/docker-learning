@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-kafka-sender
+  namespace: {{ .Values.namespace | default "default" }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-sender
+  template:
+    metadata:
+      labels:
+        app: kafka-sender
+    spec:
+      containers:
+      - name: kafka-sender
+        image: {{ .Values.kafkaSender.image }}
+        imagePullPolicy: Never
+        ports:
+        - containerPort: {{ .Values.kafkaSender.port }}

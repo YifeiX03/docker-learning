@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-kafka-receiver-config
+  namespace: {{ .Values.namespace | default "default" }}
+data:
+  # Add your configuration key-value pairs here
+  KAFKA_BOOTSTRAP_SERVERS: {{ .Values.kafka.bootstrapServers }}
+  KAFKA_TOPIC: {{ .Values.kafka.topic }}
+  # Add more configuration as needed

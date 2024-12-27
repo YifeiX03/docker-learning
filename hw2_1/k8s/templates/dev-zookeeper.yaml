@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-mongodb
+  name: {{ .Release.Name }}-zookeeper
   namespace: {{ .Values.namespace | default "default" }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mongodb
+      app: zookeeper
   template:
     metadata:
       labels:
-        app: mongodb
+        app: zookeeper
     spec:
       containers:
-      - name: mongodb
-        image: {{ .Values.mongodb.image }}
+      - name: zookeeper
+        image: {{ .Values.zookeeper.image }}
         ports:
-        - containerPort: {{ .Values.mongodb.port }}
+        - containerPort: {{ .Values.zookeeper.port }}
