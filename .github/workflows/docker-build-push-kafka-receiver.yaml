@@ -1,4 +1,4 @@
-name: Docker Build and Push
+name: Docker Build and Push Kafka Receiver
 
 on:
   push:
@@ -11,7 +11,7 @@ env:
   DOCKER_PASSWORD: ${{ secrets.DOCKER_TOKEN }}
   IMAGE_NAME: yifeix/kafka-receiver
   BUILD_CONTEXT: ./hw2_1
-  DOCKERFILE_PATH: ./kafka-receiver/Dockerfile.receiver
+  DOCKERFILE_PATH: ./hw2_1/kafka-receiver/Dockerfile.receiver
 
 jobs:
   build-and-push:

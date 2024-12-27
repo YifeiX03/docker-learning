@@ -1,4 +1,4 @@
-name: Docker Build and Push
+name: Docker Build and Push Kafka Sender
 
 on:
   push:
@@ -9,9 +9,9 @@ on:
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_TOKEN }}
-  IMAGE_NAME: yifeix/simple-frontend
+  IMAGE_NAME: yifeix/kafka-sender
   BUILD_CONTEXT: ./hw2_1
-  DOCKERFILE_PATH: ./kafka-sender/Dockerfile.sender
+  DOCKERFILE_PATH: ./hw2_1/kafka-sender/Dockerfile.sender
 
 jobs:
   build-and-push:
