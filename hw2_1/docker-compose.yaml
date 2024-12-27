@@ -33,9 +33,9 @@ services:
 
   kafka-sender:
     build:
-      context: .
-      dockerfile: Dockerfile.sender
-    hostname: kafka-sender
+      context: ./
+      dockerfile: ./kafka-sender/Dockerfile.sender
+    hostname: &kafka-sender-host kafka-sender
     ports:
       - "5000:5000"
     depends_on:
@@ -46,9 +46,9 @@ services:
 
   kafka-receiver:
     build:
-      context: .
-      dockerfile: Dockerfile.receiver
-    hostname: kafka-receiver
+      context: ./
+      dockerfile: ./kafka-receiver/Dockerfile.receiver
+    hostname: &kafka-receiver-host kafka-receiver
     ports:
       - "6000:6000"
     depends_on:
@@ -64,6 +64,9 @@ services:
     hostname: frontend
     ports:
       - "8000:80"
+    environment:
+      KAFKA_SENDER_HOST: *kafka-sender-host
+      KAFKA_RECEIVER_HOST: *kafka-receiver-host
     depends_on:
       - kafka-sender
       - kafka-receiver
