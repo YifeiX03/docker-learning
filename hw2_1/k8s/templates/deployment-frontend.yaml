@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-frontend
+  name: {{ .Values.namespace }}-frontend
   namespace: {{ .Values.namespace | default "default" }}
 spec:
   replicas: 1
@@ -16,7 +16,6 @@ spec:
       containers:
       - name: frontend
         image: {{ .Values.frontend.image }}
-        imagePullPolicy: Never
         ports:
         - containerPort: {{ .Values.frontend.port }}
         env:

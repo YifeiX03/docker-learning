@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-kafka-receiver
+  name: {{ .Values.namespace }}-kafka-receiver
   namespace: {{ .Values.namespace | default "default" }}
 spec:
   replicas: 1
@@ -16,6 +16,5 @@ spec:
       containers:
       - name: kafka-receiver
         image: {{ .Values.kafkaReceiver.image }}
-        imagePullPolicy: Never
         ports:
         - containerPort: {{ .Values.kafkaReceiver.port }}

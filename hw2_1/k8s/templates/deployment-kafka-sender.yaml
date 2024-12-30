@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-zookeeper
+  name: {{ .Values.namespace }}-kafka-sender
   namespace: {{ .Values.namespace | default "default" }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: zookeeper
+      app: kafka-sender
   template:
     metadata:
       labels:
-        app: zookeeper
+        app: kafka-sender
     spec:
       containers:
-      - name: zookeeper
-        image: {{ .Values.zookeeper.image }}
+      - name: kafka-sender
+        image: {{ .Values.kafkaSender.image }}
         ports:
-        - containerPort: {{ .Values.zookeeper.port }}
+        - containerPort: {{ .Values.kafkaSender.port }}

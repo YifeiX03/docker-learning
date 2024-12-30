@@ -12,15 +12,15 @@ mongodb:
   port: 27017
 
 kafkaSender:
-  image: hw2_1-kafka-sender:latest
+  image: yifeix/kafka-sender:latest
   port: 5000
 
 kafkaReceiver:
-  image: hw2_1-kafka-receiver:latest
+  image: yifeix/kafka-receiver:latest
   port: 6000
 
 frontend:
-  image: hw2_1-frontend:latest
+  image: yifeix/simple-frontend:latest
   port: 80
   servicePort: 8000
 

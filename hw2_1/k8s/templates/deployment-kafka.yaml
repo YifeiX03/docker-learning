@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-kafka
+  name: {{ .Values.namespace }}-kafka
   namespace: {{ .Values.namespace | default "default" }}
 spec:
   replicas: 1
